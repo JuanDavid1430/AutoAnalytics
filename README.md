@@ -3,8 +3,8 @@
 **AutoAnalytics** es una **WebApp** desarrollada con **Angular, CSS, HTML y PostgreSQL**, enfocada en ofrecer a los **Centros de Diagnóstico Automotriz (CDA)** una solución integral para **gestionar clientes (CRM)** y **automatizar procesos logísticos**.
 
 ## 🚀 Tecnologías utilizadas  
-- **Frontend:** Angular, HTML, CSS  
-- **Backend:** (Indica aquí si usas Node.js, NestJS, Express, etc.)  
+- **Frontend:** Angular v18, HTML, CSS  
+- **Backend:** PHP 
 - **Base de datos:** PostgreSQL  
 
 ## 🎯 Características principales  
