@@ -43,7 +43,7 @@
       <label for="apellido">Nick:</label>
       <input type="text" id="nick" formControlName="nick" placeholder="Ingresa tu nick">
       <p *ngIf="registerForm.get('nick')?.invalid && registerForm.get('nick')?.touched" class="error">
-        Usarás tu nick para iniciar sesión.
+        Usarás tu nick para iniciar Sesion
       </p>
   
       <label for="contraseña">Contraseña:</label>
@@ -61,6 +61,5 @@
       <button type="submit">Registrarse</button>
     </form>
   
-    <p class="message">{{ message }}</p>
   </div>
   

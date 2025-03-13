@@ -17,7 +17,7 @@ class AuthController extends Controller {
             'fechaNacimiento' => 'required|date',
             'correoElectronico' => 'required|email|unique:personas,correoElectronico',
             'idPerfil' => 'required|integer|exists:perfiles,idPerfil',
-            'nick' => 'required|string|unique:personas,nick',
+            'nick' => 'required|string|unique:usuarios,nick',
             'contraseña' => 'required|string|min:6'
         ]);
 
@@ -35,6 +35,37 @@ class AuthController extends Controller {
             'nick' => $request->nick,
         ]);
 
-        return response()->json(['message' => 'Registro exitoso', 'usuario' => $usuario], 201);
+        return response()->json(['message' => 'Registro exitoso', 'usuario' => $usuario, 'success' => 'true'], 201);
+    }
+
+     // Método de login
+     public function login(Request $request) {
+        // Validar los datos de entrada
+        $validator = Validator::make($request->all(), [
+            'nick' => 'required|string',
+            'contraseña' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        // Buscar al usuario por su nick
+        $usuario = Usuario::where('nick', $request->nick)->first();
+
+        // Verificar si el usuario existe y si la contraseña es correcta
+        if (!$usuario || !Hash::check($request->contraseña, $usuario->contraseña)) {
+            return response()->json(['message' => 'Credenciales incorrectas'], 401);
+        }
+
+        // Generar un token de acceso para el usuario
+        $token = $usuario->createToken('auth_token')->plainTextToken;
+
+        // Devolver una respuesta con el token
+        return response()->json([
+            'message' => 'Login exitoso',
+            'usuario' => $usuario,
+            'token' => $token,
+        ], 200);
     }
 }

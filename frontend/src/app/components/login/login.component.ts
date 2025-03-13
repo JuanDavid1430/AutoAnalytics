@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms'; // Necesario para ngModel
 import { AuthService } from '../../services/auth.service';
 
+
 @Component({
   selector: 'app-login',
   standalone: true,
