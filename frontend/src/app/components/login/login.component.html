@@ -1,15 +1,14 @@
-<div class="login-container">
-    <header class="header">
+<div class="auth-container login-container">
+    <header class="auth-header">
         <i class="fas fa-user-circle header-icon"></i>
         <h1>Login</h1>
     </header>
-    <form (ngSubmit)="onSubmit()" class="login-form">
-        <label for="email">Email:</label>
-        <input type="email" id="email" [(ngModel)]="email" name="email" required placeholder="Ingresa tu email">
+    <form (ngSubmit)="onSubmit()" class="auth-form">
+        <label for="nick">Nick:</label>
+        <input type="text" id="nick" [(ngModel)]="email" name="nick" required placeholder="Ingresa tu nick">
 
         <label for="password">Contraseña:</label>
-        <input type="password" id="passwordLogin" [(ngModel)]="password" name="password" required
-            placeholder="Ingresa tu contraseña">
+        <input type="password" id="passwordLogin" [(ngModel)]="password" name="password" required placeholder="Ingresa tu contraseña">
 
         <button type="submit">Login</button>
     </form>

@@ -1,53 +1,66 @@
-<div class="register-container">
-    <header class="header">
-        <i class="fas fa-user-plus header-icon"></i>
-        <h1>Registro</h1>
+<div class="auth-container register-container">
+    <header class="auth-header">
+      <i class="fas fa-user-plus header-icon"></i>
+      <h1>Registro</h1>
     </header>
+  
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" formControlName="nombre" placeholder="Ingresa tu nombre">
+      <p *ngIf="registerForm.get('nombre')?.invalid && registerForm.get('nombre')?.touched" class="error">
+        El nombre es obligatorio.
+      </p>
+  
+      <label for="apellido">Apellido:</label>
+      <input type="text" id="apellido" formControlName="apellido" placeholder="Ingresa tu apellido">
+      <p *ngIf="registerForm.get('apellido')?.invalid && registerForm.get('apellido')?.touched" class="error">
+        El apellido es obligatorio.
+      </p>
+  
+      <label for="genero">Género:</label>
+      <select id="genero" formControlName="genero">
+        <option value="">Selecciona</option>
+        <option value="M">Masculino</option>
+        <option value="F">Femenino</option>
+        <option value="O">Otro</option>
+      </select>
+      <p *ngIf="registerForm.get('genero')?.invalid && registerForm.get('genero')?.touched" class="error">
+        Selecciona un género.
+      </p>
+  
+      <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+      <input type="date" id="fechaNacimiento" formControlName="fechaNacimiento">
+      <p *ngIf="registerForm.get('fechaNacimiento')?.invalid && registerForm.get('fechaNacimiento')?.touched" class="error">
+        Ingresa una fecha válida.
+      </p>
+  
+      <label for="correoElectronico">Correo Electrónico:</label>
+      <input type="email" id="correoElectronico" formControlName="correoElectronico" placeholder="Ingresa tu correo">
+      <p *ngIf="registerForm.get('correoElectronico')?.invalid && registerForm.get('correoElectronico')?.touched" class="error">
+        Correo inválido.
+      </p>
 
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
-                <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" formControlName="nombre" placeholder="Ingresa tu nombre">
-        <p *ngIf="registerForm.get('nombre')?.invalid && registerForm.get('nombre')?.touched" class="error">El nombre es obligatorio.</p>
-
-        <label for="apellido">Apellido:</label>
-        <input type="text" id="apellido" formControlName="apellido" placeholder="Ingresa tu apellido">
-        <p *ngIf="registerForm.get('apellido')?.invalid && registerForm.get('apellido')?.touched" class="error">El apellido es obligatorio.</p>
-
-        <label for="genero">Género:</label>
-        <select id="genero" formControlName="genero">
-            <option value="">Selecciona</option>
-            <option value="M">Masculino</option>
-            <option value="F">Femenino</option>
-            <option value="O">Otro</option>
-        </select>
-        <p *ngIf="registerForm.get('genero')?.invalid && registerForm.get('genero')?.touched" class="error">Selecciona un género.</p>
-
-        <label for="fechaNacimiento">Fecha de Nacimiento:</label>
-        <input type="date" id="fechaNacimiento" formControlName="fechaNacimiento">
-        <p *ngIf="registerForm.get('fechaNacimiento')?.invalid && registerForm.get('fechaNacimiento')?.touched" class="error">Ingresa una fecha válida.</p>
-
-        <label for="correoElectronico">Correo Electrónico:</label>
-        <input type="email" id="correoElectronico" formControlName="correoElectronico" placeholder="Ingresa tu correo">
-        <p *ngIf="registerForm.get('correoElectronico')?.invalid && registerForm.get('correoElectronico')?.touched" class="error">Correo inválido.</p>
-
-        <label for="idPerfil">Perfil:</label>
-        <select id="idPerfil" formControlName="idPerfil">
-            <option value="">Selecciona un perfil</option>
-            <option value="1">Administrador</option>
-            <option value="2">Usuario</option>
-        </select>
-        <p *ngIf="registerForm.get('idPerfil')?.invalid && registerForm.get('idPerfil')?.touched" class="error">Selecciona un perfil.</p>
-
-        <label for="contraseña">Contraseña:</label>
-        <input type="password" id="contraseña" formControlName="contraseña" placeholder="Ingresa tu contraseña">
-        <p *ngIf="registerForm.get('contraseña')?.invalid && registerForm.get('contraseña')?.touched" class="error">Debe tener al menos 6 caracteres.</p>
-
-        <label for="confirmPassword">Confirmar Contraseña:</label>
-        <input type="password" id="confirmPassword" formControlName="confirmPassword" placeholder="Confirma tu contraseña">
-        <p *ngIf="registerForm.hasError('mismatch')" class="error">Las contraseñas no coinciden.</p>
-
-        <button type="submit">Registrarse</button>
+      <label for="apellido">Nick:</label>
+      <input type="text" id="nick" formControlName="nick" placeholder="Ingresa tu nick">
+      <p *ngIf="registerForm.get('nick')?.invalid && registerForm.get('nick')?.touched" class="error">
+        Usarás tu nick para iniciar sesión.
+      </p>
+  
+      <label for="contraseña">Contraseña:</label>
+      <input type="password" id="contraseña" formControlName="contraseña" placeholder="Ingresa tu contraseña">
+      <p *ngIf="registerForm.get('contraseña')?.invalid && registerForm.get('contraseña')?.touched" class="error">
+        Debe tener al menos 6 caracteres.
+      </p>
+  
+      <label for="confirmPassword">Confirmar Contraseña:</label>
+      <input type="password" id="confirmPassword" formControlName="confirmPassword" placeholder="Confirma tu contraseña">
+      <p *ngIf="registerForm.hasError('mismatch')" class="error">
+        Las contraseñas no coinciden.
+      </p>
+  
+      <button type="submit">Registrarse</button>
     </form>
-    
+  
     <p class="message">{{ message }}</p>
-</div>
+  </div>
+  

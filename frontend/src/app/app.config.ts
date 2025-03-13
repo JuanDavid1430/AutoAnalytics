@@ -1,11 +1,8 @@
 import { ApplicationConfig } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http'; // Asegúrate de que esto esté importado
-import { routes } from './app.routes';
+import { provideHttpClient, withFetch } from '@angular/common/http'; // Provee HttpClient globalmente
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),
-    provideHttpClient() // Provee HttpClient globalmente
+    provideHttpClient(withFetch()) // Solo provee HttpClient
   ]
 };

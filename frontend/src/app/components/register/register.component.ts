@@ -8,7 +8,6 @@ import { CommonModule } from '@angular/common'; // Importa CommonModule
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
   registerForm: FormGroup;
@@ -22,6 +21,7 @@ export class RegisterComponent {
       fechaNacimiento: ['', Validators.required],
       correoElectronico: ['', [Validators.required, Validators.email]],
       idPerfil: ['', Validators.required],
+      nick: ['', Validators.required],
       contraseña: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required]
     }, { validator: this.passwordMatchValidator });

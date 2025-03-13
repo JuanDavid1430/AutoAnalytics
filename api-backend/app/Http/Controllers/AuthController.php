@@ -17,6 +17,7 @@ class AuthController extends Controller {
             'fechaNacimiento' => 'required|date',
             'correoElectronico' => 'required|email|unique:personas,correoElectronico',
             'idPerfil' => 'required|integer|exists:perfiles,idPerfil',
+            'nick' => 'required|string|unique:personas,nick',
             'contraseña' => 'required|string|min:6'
         ]);
 
@@ -30,6 +31,8 @@ class AuthController extends Controller {
             'idPersona' => $persona->idPersona,
             'idPerfil' => $request->idPerfil,
             'contraseña' => Hash::make($request->contraseña),
+            'fechaCreacion' => now(),
+            'nick' => $request->nick,
         ]);
 
         return response()->json(['message' => 'Registro exitoso', 'usuario' => $usuario], 201);

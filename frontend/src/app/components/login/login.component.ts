@@ -7,7 +7,6 @@ import { AuthService } from '../../services/auth.service';
   standalone: true,
   imports: [FormsModule], // Importa FormsModule para formularios
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   email: string = '';
