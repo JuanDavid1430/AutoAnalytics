@@ -1,29 +1,67 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms'; // Necesario para ngModel
+import { Component, EventEmitter, Output } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-
+import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule], // Importa FormsModule para formularios
+  imports: [ReactiveFormsModule, FormsModule, CommonModule], 
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
-  email: string = '';
-  password: string = '';
-  message: string = '';
+  loginForm: FormGroup; // Declaramos la variable loginForm
 
-  constructor(private authService: AuthService) {}
+  @Output() loginSuccess = new EventEmitter<void>();
+
+  constructor(private authService: AuthService, private fb: FormBuilder) {
+    // ✅ Creamos correctamente el FormGroup en el constructor
+    this.loginForm = this.fb.group({
+      nick: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
 
   onSubmit() {
-    this.authService.login(this.email, this.password).subscribe({
+    if (this.loginForm.invalid) {
+      return; // Evita enviar el formulario si es inválido
+    }
+
+    const { nick, password } = this.loginForm.value; // ✅ Tomamos los valores del formulario
+
+    this.authService.login(nick, password).subscribe({
       next: (response) => {
-        this.message = response.success ? 'Login exitoso' : 'Credenciales incorrectas';
+        if (response.success) {
+          Swal.fire({
+            icon: 'success',
+            title: '¡Inicio de sesión exitoso!',
+            text: 'Has iniciado sesión correctamente.',
+            confirmButtonText: 'Aceptar'
+          }).then(() => {
+            this.loginForm.reset(); // ✅ Limpia el formulario tras el login exitoso
+            this.loginSuccess.emit();
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: '!Ops!',
+            text: response.message,
+            confirmButtonText: 'Aceptar'
+          }).then(() => {
+            this.loginForm.reset(); // Limpiamos formulario
+          });
+        }
       },
       error: (error) => {
-        console.error(error);
-        this.message = 'Error al intentar login';
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.error.message,
+          confirmButtonText: 'Aceptar'
+        }).then(() => {
+          this.loginForm.reset(); // Limpiamos formulario
+        });
       }
     });
   }

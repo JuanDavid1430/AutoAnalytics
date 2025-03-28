@@ -47,15 +47,16 @@ class AuthController extends Controller {
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 400);
+            return response()->json(['message' => $validator->errors()], 401);
         }
 
         // Buscar al usuario por su nick
         $usuario = Usuario::where('nick', $request->nick)->first();
 
+
         // Verificar si el usuario existe y si la contraseña es correcta
         if (!$usuario || !Hash::check($request->contraseña, $usuario->contraseña)) {
-            return response()->json(['message' => 'Credenciales incorrectas'], 401);
+            return response()->json(['message' => 'Credenciales incorrectas, Intentalo de Nuevo']);
         }
 
         // Generar un token de acceso para el usuario
@@ -64,8 +65,8 @@ class AuthController extends Controller {
         // Devolver una respuesta con el token
         return response()->json([
             'message' => 'Login exitoso',
-            'usuario' => $usuario,
             'token' => $token,
+            'success' => 'true'
         ], 200);
     }
 }
