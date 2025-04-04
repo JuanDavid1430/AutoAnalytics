@@ -3,7 +3,7 @@
         <i class="fas fa-user-circle header-icon"></i>
         <h1>Login</h1>
     </header>
-    <form [formGroup]="loginForm"(ngSubmit)="onSubmit()" class="auth-form">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
         <label for="nick">Nick:</label>
         <input type="text" id="nickLogin" name="nick" formControlName="nick" required placeholder="Ingresa tu nick">
 

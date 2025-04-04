@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { CommonModule } from '@angular/common';
+import { RouterModule, Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [LoginComponent, RegisterComponent, CommonModule],
+  imports: [LoginComponent, RegisterComponent, CommonModule, RouterModule],
   template: `
     <header class="header">
       <div class="logo-container">
@@ -15,7 +17,8 @@ import { CommonModule } from '@angular/common';
       <h1>Hola!, Bienvenido al portal de AutoAnalytics</h1>
     </header>
     
-    <div class="container">
+    <!-- Mostrar login/register solo en la ruta principal o login/register -->
+    <div *ngIf="showAuthForms" class="container">
       <div class="form-container">
         <!-- Sección Login -->
         <div class="form-section login-section" *ngIf="showLogin">
@@ -38,11 +41,30 @@ import { CommonModule } from '@angular/common';
         </div>
       </div>
     </div>
+    
+    <!-- Mostrar el router-outlet para otras rutas (como dashboard) -->
+    <div *ngIf="!showAuthForms">
+      <router-outlet></router-outlet>
+    </div>
   `,
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   showLogin: boolean = true; // Controla qué formulario se muestra
+  showAuthForms: boolean = true; // Controla si se muestran los formularios de autenticación
+
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    // Suscribirse a los eventos de navegación para determinar qué mostrar
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      const url = event.urlAfterRedirects;
+      // Mostrar formularios de autenticación solo en la ruta principal o login/register
+      this.showAuthForms = url === '/' || url === '/login' || url === '/register';
+    });
+  }
 
   toggleForm(event: Event) {
     event.preventDefault(); // Evita el comportamiento predeterminado del enlace
