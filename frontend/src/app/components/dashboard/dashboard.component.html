@@ -1,21 +1,46 @@
 <div class="dashboard-container">
   <div class="dashboard-header">
-    <h1>Bienvenido al Dashboard</h1>
-    <button class="logout-button" (click)="logout()">Cerrar Sesión</button>
+    <h1>Panel de Control - AutoAnalytics</h1>
+    <div class="header-actions">
+      <span class="welcome-text">Bienvenido, {{userName}}</span>
+      <button class="logout-button" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+      </button>
+    </div>
   </div>
   
   <div class="dashboard-content">
-    <div class="card">
-      <h2>Estadísticas</h2>
-      <p>Aquí podrás ver tus estadísticas.</p>
+    <div class="card main-card" (click)="navigateTo('registros')">
+      <div class="card-icon">
+        <i class="fas fa-car"></i>
+      </div>
+      <div class="card-content">
+        <h2>Registros de Autos</h2>
+        <p>Gestiona y visualiza todos los registros de vehículos en el sistema</p>
+        <button class="card-button">Ver Registros</button>
+      </div>
     </div>
-    <div class="card">
-      <h2>Actividad Reciente</h2>
-      <p>Aquí podrás ver tu actividad reciente.</p>
+
+    <div class="card main-card" (click)="navigateTo('estadisticas')">
+      <div class="card-icon">
+        <i class="fas fa-chart-line"></i>
+      </div>
+      <div class="card-content">
+        <h2>Estadísticas</h2>
+        <p>Analiza datos y métricas importantes del negocio</p>
+        <button class="card-button">Ver Estadísticas</button>
+      </div>
     </div>
-    <div class="card">
-      <h2>Notificaciones</h2>
-      <p>Aquí podrás ver tus notificaciones.</p>
+
+    <div class="card main-card" (click)="navigateTo('clientes')">
+      <div class="card-icon">
+        <i class="fas fa-users"></i>
+      </div>
+      <div class="card-content">
+        <h2>Registro de Clientes</h2>
+        <p>Administra la información de tus clientes</p>
+        <button class="card-button">Gestionar Clientes</button>
+      </div>
     </div>
   </div>
 </div>

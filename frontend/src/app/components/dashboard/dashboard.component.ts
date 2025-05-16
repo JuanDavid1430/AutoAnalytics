@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  userName: string = 'Usuario';
   
   constructor(
     private authService: AuthService,
@@ -22,6 +23,28 @@ export class DashboardComponent implements OnInit {
     // Verificar si el usuario está autenticado
     if (!this.authService.isLoggedIn()) {
       this.router.navigate(['/login']);
+    }
+    // Aquí puedes obtener el nombre del usuario del servicio de autenticación
+    this.getUserName();
+  }
+
+  getUserName(): void {
+    // Implementa la lógica para obtener el nombre del usuario
+    // Por ejemplo, desde el servicio de autenticación
+    this.userName = this.authService.getUserName() || 'Usuario';
+  }
+
+  navigateTo(route: string): void {
+    switch(route) {
+      case 'registros':
+        this.router.navigate(['/registros']);
+        break;
+      case 'estadisticas':
+        this.router.navigate(['/estadisticas']);
+        break;
+      case 'clientes':
+        this.router.navigate(['/clientes']);
+        break;
     }
   }
 
