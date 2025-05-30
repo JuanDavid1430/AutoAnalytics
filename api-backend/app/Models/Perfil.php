@@ -1,17 +1,19 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Perfil extends Model {
+class Perfil extends Model
+{
     use HasFactory;
 
+    /** Nombre correcto de la tabla */
     protected $table = 'perfiles';
-    protected $primaryKey = 'idPerfil';
-    protected $fillable = ['nombre'];
 
-    public function usuarios() {
-        return $this->hasMany(Usuario::class, 'idPerfil');
-    }
+    /** PK personalizada (opcional) */
+    protected $primaryKey = 'id_perfil';
+
+    protected $fillable = ['nombre'];
 }

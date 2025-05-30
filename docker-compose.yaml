@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres_laravel
+    environment:
+      POSTGRES_DB: laravel_db
+      POSTGRES_USER: laravel_user
+      POSTGRES_PASSWORD: secret123
+    ports:
+      - "5433:5432"  # ← Puerto local 5433, contenedor 5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - laravel
+
+volumes:
+  pgdata:
+
+networks:
+  laravel:
+    driver: bridge
