@@ -21,17 +21,18 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     // Verificar si el usuario está autenticado
-    if (!this.authService.isLoggedIn()) {
+    if (!this.authService.isAuthenticated()) {
       this.router.navigate(['/login']);
     }
-    // Aquí puedes obtener el nombre del usuario del servicio de autenticación
+    // Obtener el nombre del usuario
     this.getUserName();
   }
 
   getUserName(): void {
-    // Implementa la lógica para obtener el nombre del usuario
-    // Por ejemplo, desde el servicio de autenticación
-    this.userName = this.authService.getUserName() || 'Usuario';
+    const user = this.authService.getCurrentUser();
+    if (user && user.persona) {
+      this.userName = `${user.persona.nombre} ${user.persona.apellido}`;
+    }
   }
 
   navigateTo(route: string): void {

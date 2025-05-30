@@ -1,82 +1,79 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, CommonModule], 
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  loginForm: FormGroup; // Declaramos la variable loginForm
-
-  @Output() loginSuccess = new EventEmitter<void>();
+  loginForm: FormGroup;
+  errorMessage: string = '';
+  loading: boolean = false;
 
   constructor(
-    private authService: AuthService, 
     private fb: FormBuilder,
+    private authService: AuthService,
     private router: Router
   ) {
-    // ✅ Creamos correctamente el FormGroup en el constructor
     this.loginForm = this.fb.group({
-      nick: ['', Validators.required],
-      password: ['', Validators.required]
+      nick: ['', [Validators.required]],
+      contraseña: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
   onSubmit() {
-    if (this.loginForm.invalid) {
-      return; // Evita enviar el formulario si es inválido
-    }
-
-    const { nick, password } = this.loginForm.value; // ✅ Tomamos los valores del formulario
-
-    this.authService.login(nick, password).subscribe({
-      next: (response) => {
-        if (response.success) {
-          // Primero emitimos el evento de login exitoso
-          this.loginSuccess.emit();
-          
-          // Luego limpiamos el formulario
-          this.loginForm.reset();
-          
-          // Mostramos el mensaje de éxito
-          Swal.fire({
-            icon: 'success',
-            title: '¡Inicio de sesión exitoso!',
-            text: 'Has iniciado sesión correctamente.',
-            confirmButtonText: 'Aceptar'
-          }).then(() => {
-            // Después de cerrar el mensaje, redirigimos al dashboard
-            // Usamos router.navigate para una navegación más limpia
-            this.router.navigate(['/dashboard']);
-          });
-        } else {
+    if (this.loginForm.valid) {
+      this.loading = true;
+      this.errorMessage = '';
+      
+      const { nick, contraseña } = this.loginForm.value;
+      
+      this.authService.login(nick, contraseña).subscribe({
+        next: (response) => {
+          if (response.success === 'true') {
+            Swal.fire({
+              icon: 'success',
+              title: '¡Bienvenido!',
+              text: 'Has iniciado sesión exitosamente',
+              timer: 2000,
+              showConfirmButton: false
+            }).then(() => {
+              this.router.navigate(['/dashboard']);
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: response.message || 'Error al iniciar sesión'
+            });
+            this.errorMessage = response.message || 'Error al iniciar sesión';
+          }
+        },
+        error: (error) => {
           Swal.fire({
             icon: 'error',
-            title: '!Ops!',
-            text: response.message,
-            confirmButtonText: 'Aceptar'
-          }).then(() => {
-            this.loginForm.reset(); // Limpiamos formulario
+            title: 'Error',
+            text: error.error.message || 'Error al iniciar sesión'
           });
+          this.errorMessage = error.error.message || 'Error al iniciar sesión';
+        },
+        complete: () => {
+          this.loading = false;
         }
-      },
-      error: (error) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: error.error.message,
-          confirmButtonText: 'Aceptar'
-        }).then(() => {
-          this.loginForm.reset(); // Limpiamos formulario
-        });
-      }
-    });
+      });
+    } else {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Campos incompletos',
+        text: 'Por favor, completa todos los campos correctamente'
+      });
+    }
   }
 }

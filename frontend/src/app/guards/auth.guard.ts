@@ -1,28 +1,22 @@
-import { inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { isPlatformBrowser } from '@angular/common';
-import { PLATFORM_ID } from '@angular/core';
 
-export const authGuard = () => {
-  const authService = inject(AuthService);
-  const router = inject(Router);
-  const platformId = inject(PLATFORM_ID);
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthGuard {
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
-  // Verificamos si estamos en el navegador
-  if (!isPlatformBrowser(platformId)) {
-    console.log('No estamos en el navegador, permitiendo acceso');
-    return true;
+  canActivate(): boolean {
+    if (this.authService.isAuthenticated()) {
+      return true;
+    }
+
+    this.router.navigate(['/login']);
+    return false;
   }
-
-  // Verificamos si el usuario está autenticado
-  if (authService.isLoggedIn()) {
-    console.log('Usuario autenticado, permitiendo acceso al dashboard');
-    return true;
-  }
-
-  // Si el usuario no está autenticado, redirigir al login
-  console.log('Usuario no autenticado, redirigiendo al login');
-  router.navigate(['/login']);
-  return false;
-};
+}

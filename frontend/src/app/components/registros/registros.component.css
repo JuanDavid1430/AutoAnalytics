@@ -1,0 +1,191 @@
+.registros-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.registros-header {
+  margin-bottom: 30px;
+}
+
+.registros-header h2 {
+  color: #F2F2F2;
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.auto-form {
+  background-color: #0A1A3A;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-bottom: 30px;
+  border: 1px solid rgba(65, 174, 217, 0.1);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #F2F2F2;
+  font-weight: 500;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #2d3748;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  background-color: #1A2A3A;
+  color: #F2F2F2;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #41AED9;
+  box-shadow: 0 0 0 3px rgba(65, 174, 217, 0.1);
+}
+
+.form-control.is-invalid {
+  border-color: #e53e3e;
+}
+
+.invalid-feedback {
+  color: #e53e3e;
+  font-size: 0.875rem;
+  margin-top: 5px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #41AED9;
+  color: #010D26;
+}
+
+.btn-primary:hover {
+  background-color: #2b6cb0;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: #2d3748;
+  color: #F2F2F2;
+}
+
+.btn-secondary:hover {
+  background-color: #1a202c;
+  transform: translateY(-2px);
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.autos-list {
+  background-color: #0A1A3A;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(65, 174, 217, 0.1);
+}
+
+.autos-list h3 {
+  color: #F2F2F2;
+  margin-bottom: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #2d3748;
+  color: #F2F2F2;
+}
+
+.table th {
+  background-color: #1A2A3A;
+  color: #F2F2F2;
+  font-weight: 600;
+}
+
+.table tbody tr:hover {
+  background-color: #1A2A3A;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-edit,
+.btn-delete {
+  padding: 6px 12px;
+  border-radius: 4px;
+  color: #010D26;
+}
+
+.btn-edit {
+  background-color: #41AED9;
+}
+
+.btn-delete {
+  background-color: #e53e3e;
+}
+
+.btn-edit:hover {
+  background-color: #2b6cb0;
+  transform: translateY(-2px);
+}
+
+.btn-delete:hover {
+  background-color: #c53030;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .registros-container {
+    padding: 10px;
+  }
+
+  .auto-form,
+  .autos-list {
+    padding: 15px;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+} 

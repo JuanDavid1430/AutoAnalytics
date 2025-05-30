@@ -1,11 +1,14 @@
 import { ApplicationConfig } from '@angular/core';
-import { provideHttpClient, withFetch } from '@angular/common/http'; // Provee HttpClient globalmente
-import { provideRouter, withViewTransitions } from '@angular/router'; // Importa provideRouter
-import { routes } from './app.routes'; // Importa tus rutas
+import { provideRouter } from '@angular/router';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { routes } from './app.routes';
+import { authInterceptor } from './interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(withFetch()), // Solo provee HttpClient
-    provideRouter(routes, withViewTransitions()) // Configura las rutas con transiciones
+    provideRouter(routes),
+    provideHttpClient(
+      withInterceptors([authInterceptor])
+    )
   ]
 };

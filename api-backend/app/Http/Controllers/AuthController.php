@@ -7,8 +7,9 @@ use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Routing\Controller as BaseController;
 
-class AuthController extends Controller {
+class AuthController extends BaseController {
     public function register(Request $request) {
         $validator = Validator::make($request->all(), [
             'nombre' => 'required|string',
@@ -51,7 +52,7 @@ class AuthController extends Controller {
         }
 
         // Buscar al usuario por su nick
-        $usuario = Usuario::where('nick', $request->nick)->first();
+        $usuario = Usuario::with('persona')->where('nick', $request->nick)->first();
 
 
         // Verificar si el usuario existe y si la contraseña es correcta
@@ -66,7 +67,8 @@ class AuthController extends Controller {
         return response()->json([
             'message' => 'Login exitoso',
             'token' => $token,
-            'success' => 'true'
+            'success' => 'true',
+            'user' => $usuario
         ], 200);
     }
 }

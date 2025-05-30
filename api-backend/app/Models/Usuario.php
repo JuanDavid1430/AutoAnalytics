@@ -11,11 +11,12 @@ class Usuario extends Authenticatable {
 
     protected $table = 'usuarios';
     protected $primaryKey = 'idUsuario';
-    protected $fillable = ['idPersona', 'idPerfil', 'contraseña', 'fechaCreacion','nick'];
+    public $timestamps = false;
+    protected $fillable = ['idPersona', 'idPerfil', 'nick', 'contraseña', 'fechaCreacion'];
     protected $hidden = ['contraseña'];
 
     public function persona() {
-        return $this->belongsTo(Persona::class, 'idPersona');
+        return $this->belongsTo(Persona::class, 'idPersona', 'idPersona');
     }
 
     public function perfil() {
